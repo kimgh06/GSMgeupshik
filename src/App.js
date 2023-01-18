@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 function App() {
   const [list, setList] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [num, setNum] = useState(0);
   const fetching = async () => {
     try {
       setLoading(true);
@@ -21,13 +22,18 @@ function App() {
   }, []);
   return <div className="App">
     {loading ? <span>loading</span> : <>
-      <p>{list[0].MLSV_YMD}</p>
-      {list.map((i, n) => <div key={n}>
-        <b>{i.MMEAL_SC_NM}</b>
-        {i.CAL_INFO}
-        {/* <div dangerouslySetInnerHTML={{ __html: i.NTR_INFO }} /> */}
-        <div dangerouslySetInnerHTML={{ __html: i.DDISH_NM }} />
-      </div>)}</>}
+      <button onClick={() => setNum(e => e < 1 ? e : e - 1)}>◀</button>
+      <div className="Main">
+        <p>{list[0].MLSV_YMD}</p>
+        {list.map((i, n) => <div key={n}>
+          <b>{i.MMEAL_SC_NM}</b>
+          {i.CAL_INFO}
+          {/* <div dangerouslySetInnerHTML={{ __html: i.NTR_INFO }} /> */}
+          <div dangerouslySetInnerHTML={{ __html: i.DDISH_NM }} />
+        </div>)}
+      </div>
+      <button onClick={() => setNum(e => (e + 1) % 3)}>▶</button>
+    </>}
   </div>;
 }
 
