@@ -18,11 +18,11 @@ function App() {
   }, []);
   return <div>
     {list.map((i, n) => <div key={n}>
-      {i.MMEAL_SC_NM}
+      <b>{i.MMEAL_SC_NM}</b>
       {i.CAL_INFO}
-      <div>{i.NTR_INFO}</div>
+      {/* <div dangerouslySetInnerHTML={{ __html: i.NTR_INFO }} /> */}
+      <div dangerouslySetInnerHTML={{ __html: i.DDISH_NM }} />
     </div>)}
-    asdfasdfasdf
   </div>;
 }
 
