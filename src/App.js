@@ -17,6 +17,7 @@ function App() {
     fetching();
   }, []);
   return <div>
+    {list[0].MLSV_YMD}
     {list.map((i, n) => <div key={n}>
       <b>{i.MMEAL_SC_NM}</b>
       {i.CAL_INFO}
