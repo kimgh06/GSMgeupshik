@@ -22,7 +22,7 @@ function App() {
       {i.CAL_INFO}
       <div>{i.NTR_INFO}</div>
     </div>)}
-    asdf
+    asdfasdfasdf
   </div>;
 }
 
