@@ -10,6 +10,7 @@ function App() {
       setLoading(1);
       const date = new Date();
       let dates = ('0' + (parseInt(date.getDate()) + add).toString()).slice(-2).toString();
+      let monAdd = 0;
       let month = ('0' + (date.getMonth() + 1)).slice(-2).toString();
       // dates < 1 ? :
       const today = parseInt(date.getFullYear().toString() + month + dates);
