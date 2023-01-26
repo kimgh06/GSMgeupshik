@@ -6,6 +6,27 @@ function App() {
   const [num, setNum] = useState(0);
   const [add, setAdd] = useState(0);
   const [today, setToday] = useState();
+  const whatmonths = (theMonth) => {
+    switch (parseInt(theMonth)) {
+      case 2:
+        return 2;
+      case 1:
+      case 3:
+      case 5:
+      case 7:
+      case 8:
+      case 10:
+      case 12:
+        return 1;
+      case 4:
+      case 6:
+      case 9:
+      case 11:
+        return 0;
+      default:
+        return -1;
+    }
+  }
   const fetching = async (add, num) => {
     try {
       setLoading(1);
@@ -13,7 +34,22 @@ function App() {
       let dates = ('0' + (parseInt(date.getDate()) + add).toString()).slice(-2).toString();
       let monAdd = 0;
       let month = ('0' + (date.getMonth() + 1)).slice(-2).toString();
-      // dates < 1 ? :
+      // if (dates < 1) {
+      //   if (whatmonths(month - 1) === 0) {
+
+      //   }
+      //   else if (whatmonths(month - 1) === 1) {
+
+      //   }
+      //   else if (whatmonths(month - 1) === 2) {
+
+      //   }
+      // }
+      // else if (date > 29) {
+      // }
+      // else {
+
+      // }
       setToday(parseInt(date.getFullYear().toString() + month + dates))
       const jsons = await (await fetch(`https://open.neis.go.kr/hub/mealServiceDietInfo?key=bb0f24af7fbc4bc896e2be32361cb2e4&Type=json&ATPT_OFCDC_SC_CODE=F10&SD_SCHUL_CODE=7380292&MLSV_YMD=${today}`)).json();
       if (JSON.stringify(jsons) !== JSON.stringify({ "RESULT": { "CODE": "INFO-200", "MESSAGE": "해당하는 데이터가 없습니다." } }) && num < jsons.mealServiceDietInfo[1].row.length) {
