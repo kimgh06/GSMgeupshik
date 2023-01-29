@@ -34,33 +34,31 @@ function App() {
       let dates = ('0' + (parseInt(date.getDate()) + add).toString()).slice(-2).toString();
       let monAdd = 0;
       let month = ('0' + (date.getMonth() + 1)).slice(-2).toString();
+      for (let i = 0; i < (Math.abs(parseInt(dates)) / 30); i++) {
+        if (parseInt(dates) < 1) { //감소할 경우
+          month--;
+          if (whatmonths(month) === 0) {
+            dates = (30 - (Math.abs(parseInt(dates)) % 30)).toString();
+          }
+          else if (whatmonths(month) === 1) {
 
-      if (parseInt(dates) < 1) { //감소할 경우
-        month--;
-        if (whatmonths(month) === 0) {
-          dates = (30 - (Math.abs(parseInt(dates)) % 30)).toString();
-        }
-        else if (whatmonths(month) === 1) {
+          }
+          else if (whatmonths(month) === 2) {
 
+          }
         }
-        else if (whatmonths(month) === 2) {
+        else if (date > 29) { //증가할 경우
+          if (whatmonths(month) === 0 && date > 30) {
+            month++;
+            dates = (parseInt(dates)).toString();
+          }
+          else if (whatmonths(month) === 1) {
 
-        }
-      }
-      else if (date > 29) { //증가할 경우
-        if (whatmonths(month) === 0 && date > 30) {
-          month++;
-          dates = (parseInt(dates)).toString();
-        }
-        else if (whatmonths(month) === 1) {
+          }
+          else if (whatmonths(month) === 2) {
 
+          }
         }
-        else if (whatmonths(month) === 2) {
-
-        }
-      }
-      else {
-
       }
       setToday(parseInt(date.getFullYear().toString() + month + dates));
       const jsons = await (await fetch(`https://open.neis.go.kr/hub/mealServiceDietInfo?key=bb0f24af7fbc4bc896e2be32361cb2e4&Type=json&ATPT_OFCDC_SC_CODE=F10&SD_SCHUL_CODE=7380292&MLSV_YMD=${date.getFullYear().toString() + month + dates}`)).json();
