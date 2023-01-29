@@ -35,18 +35,19 @@ function App() {
       let monAdd = 0;
       let month = ('0' + (date.getMonth() + 1)).slice(-2).toString();
       if (parseInt(dates) < 1) { //감소할 경우
-        if (whatmonths(month - 1) === 0) {
+        month--;
+        if (whatmonths(month) === 0) {
           dates = 30 - (Math.abs(parseInt(dates)) % 30);
         }
-        else if (whatmonths(month - 1) === 1) {
+        else if (whatmonths(month) === 1) {
 
         }
-        else if (whatmonths(month - 1) === 2) {
+        else if (whatmonths(month) === 2) {
 
         }
-        month--;
       }
-      else if (date > 29) {
+      else if (date > 29) { //증가할 경우
+
       }
       else {
 
