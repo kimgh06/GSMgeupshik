@@ -47,7 +47,15 @@ function App() {
         }
       }
       else if (date > 29) { //증가할 경우
+        if (whatmonths(month) === 0) {
 
+        }
+        else if (whatmonths(month) === 1) {
+
+        }
+        else if (whatmonths(month) === 2) {
+
+        }
       }
       else {
 
