@@ -61,16 +61,16 @@ function App() {
       else if (parseInt(dates) > 28) { //증가할 경우
         month = parseInt(month);
         if (whatmonths(month) === 0 && parseInt(dates) > 30) {
-          monAdd++;
+          monAdd = Math.floor(Math.abs(parseInt(dates)) / 30);
           dates = (Math.floor(parseInt(dates) % 30)).toString();
         }
         else if (whatmonths(month) === 1 && parseInt(dates) > 31) {
-          monAdd++;
+          monAdd = Math.floor(Math.abs(parseInt(dates)) / 31);
           dates = (Math.floor(parseInt(dates) % 31)).toString();
         }
         else if (whatmonths(month) === 2) {
-          monAdd++;
-          dates = (Math.floor(parseInt(dates) % 29)).toString();
+          monAdd = Math.floor(Math.abs(parseInt(dates)) / 28);
+          dates = (Math.floor(parseInt(dates) % 28)).toString();
         }
         dates = ('0' + dates).toString().slice(-2);
         month = ('0' + (parseInt(month) === 0 ? 12 : parseInt(month) + monAdd)).toString();
