@@ -1,6 +1,17 @@
 .App {
+  justify-content: center;
   text-align: center;
   display: flex;
 
-  button {}
+  .MainContents {
+    width: 27%;
+  }
+
+  .buttons {
+    line-height: 300px;
+
+    button {
+      height: 200px;
+    }
+  }
 }
