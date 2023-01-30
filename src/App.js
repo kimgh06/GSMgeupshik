@@ -45,9 +45,9 @@ function App() {
       let monAdd = 0;
       let month = ('0' + (date.getMonth() + 1 + monAdd)).slice(-2).toString();
       if (parseInt(dates) < 1) { //감소할 경우
-        monAdd--;
         month = parseInt(month);
         if (whatmonths(month - 1) === 0) {
+          monAdd = Math.floor(Math.abs(parseInt(dates)) / 30);
           dates = (30 - (Math.abs(parseInt(dates)) % 30)).toString();
         }
         else if (whatmonths(month - 1) === 1) {
