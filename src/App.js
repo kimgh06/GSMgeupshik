@@ -6,6 +6,8 @@ function App() {
   const [loading, setLoading] = useState(1);
   const [num, setNum] = useState(0);
   const [add, setAdd] = useState(0);
+  const [savedDates, setSavedDates] = useState(0);
+  const [savedMonth, setSavedMonth] = useState(0);
   const [today, setToday] = useState();
   const whatmonths = (theMonth) => {
     switch (parseInt(theMonth) % 12) {
@@ -42,12 +44,15 @@ function App() {
   let month = ('0' + (date.getMonth() + 1)).slice(-2).toString();
   const fetching = async (add, num) => {
     try {
+      month = parseInt(month) + savedMonth;
+      dates = dates - savedDates;
       setLoading(1);
       if (parseInt(dates) < 1) { //감소할 경우
-        month = parseInt(month);
         if (whatmonths(month - 1) === 0) {
           month--;
+          setSavedMonth(c => c - 1);
           dates = "30";
+          setSavedDates(c => c - 30);
         }
         else if (whatmonths(month - 1) === 1) {
 
@@ -55,29 +60,34 @@ function App() {
         else if (whatmonths(month - 1) === 2) {
 
         }
-        month = ('0' + (parseInt(month) === 0 ? 12 : month)).toString().slice(-2);
       }
       else if (parseInt(dates) > 28) { //증가할 경우
-        month = parseInt(month);
+        console.log(dates);
         if (whatmonths(month) === 0 && parseInt(dates) > 30) {
           console.log("0");
+          setSavedDates(c => c + 30);
           month++;
+          setSavedMonth(c => c + 1);
           dates = 1;
         }
         else if (whatmonths(month) === 1 && parseInt(dates) > 31) {
           console.log("1");
+          setSavedDates(c => c + 31);
           month++;
+          setSavedMonth(c => c + 1);
           dates = 1;
         }
         else if (whatmonths(month) === 2) {
           console.log("2");
+          setSavedDates(c => c + 28);
           month++;
+          setSavedMonth(c => c + 1);
           dates = 1;
         }
-        console.log(whatmonths(month), dates);
-        dates = ('0' + dates).toString().slice(-2);
-        month = ('0' + (parseInt(month) === 0 ? 12 : parseInt(month))).toString();
       }
+      dates = ('0' + dates).toString().slice(-2);
+      month = ('0' + (parseInt(month) === 0 ? 12 : parseInt(month))).toString();
+      console.log(whatmonths(month), dates);
       setToday(parseInt(date.getFullYear().toString() + month + dates));
       const jsons = await (await fetch(`https://open.neis.go.kr/hub/mealServiceDietInfo?key=bb0f24af7fbc4bc896e2be32361cb2e4&Type=json&ATPT_OFCDC_SC_CODE=F10&SD_SCHUL_CODE=7380292&MLSV_YMD=${date.getFullYear().toString() + month + dates}`)).json();
       if (JSON.stringify(jsons) !== JSON.stringify({ "RESULT": { "CODE": "INFO-200", "MESSAGE": "해당하는 데이터가 없습니다." } }) && num < jsons.mealServiceDietInfo[1].row.length) {
