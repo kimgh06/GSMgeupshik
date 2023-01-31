@@ -48,17 +48,19 @@ function App() {
       dates = dates - savedDates;
       setLoading(1);
       if (parseInt(dates) < 1) { //감소할 경우
+        setSavedMonth(c => c - 1);
+        month--;
         if (whatmonths(month - 1) === 0) {
-          month--;
-          setSavedMonth(c => c - 1);
           dates = "30";
           setSavedDates(c => c - 30);
         }
         else if (whatmonths(month - 1) === 1) {
-
+          dates = "31";
+          setSavedDates(c => c - 31);
         }
         else if (whatmonths(month - 1) === 2) {
-
+          dates = "28";
+          setSavedDates(c => c - 28);
         }
       }
       else if (parseInt(dates) > 28) { //증가할 경우
