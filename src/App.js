@@ -37,42 +37,44 @@ function App() {
         return -1; //머꼬?
     }
   }
+  let monAdd = 0;
   const fetching = async (add, num) => {
     try {
       setLoading(1);
       const date = new Date();
       let dates = ('0' + (parseInt(date.getDate()) + add).toString()).slice(-2).toString();
-      let monAdd = 0;
       let month = ('0' + (date.getMonth() + 1 + monAdd)).slice(-2).toString();
       if (parseInt(dates) < 1) { //감소할 경우
         month = parseInt(month);
-        if (whatmonths(month - 1) === 0) {
+        if (whatmonths(month + monAdd - 1) === 0) {
           monAdd = Math.floor(Math.abs(parseInt(dates)) / 30);
           dates = (30 - (Math.abs(parseInt(dates)) % 30)).toString();
         }
-        else if (whatmonths(month - 1) === 1) {
+        else if (whatmonths(month + monAdd - 1) === 1) {
 
         }
-        else if (whatmonths(month - 1) === 2) {
+        else if (whatmonths(month + monAdd - 1) === 2) {
 
         }
         month = ('0' + (parseInt(month) === 0 ? 12 : month + monAdd)).toString().slice(-2);
       }
       else if (parseInt(dates) > 28) { //증가할 경우
         month = parseInt(month);
-        if (whatmonths(month) === 0 && parseInt(dates) > 30) {
+        if (whatmonths(month + monAdd) === 0 && parseInt(dates) > 30) {
           monAdd = Math.floor(Math.abs(parseInt(dates)) / 30);
           dates = (Math.floor(parseInt(dates) % 30)).toString();
         }
-        else if (whatmonths(month) === 1 && parseInt(dates) > 31) {
+        else if (whatmonths(month + monAdd) === 1 && parseInt(dates) > 31) {
           monAdd = Math.floor(Math.abs(parseInt(dates)) / 31);
           dates = (Math.floor(parseInt(dates) % 31)).toString();
         }
-        else if (whatmonths(month) === 2) {
+        else if (whatmonths(month + monAdd) === 2) {
+          console.log("p");
           monAdd = Math.floor(Math.abs(parseInt(dates)) / 28);
           dates = (Math.floor(parseInt(dates) % 28)).toString();
         }
         dates = ('0' + dates).toString().slice(-2);
+        console.log(whatmonths(month + monAdd), dates);
         month = ('0' + (parseInt(month) === 0 ? 12 : parseInt(month) + monAdd)).toString();
       }
       setToday(parseInt(date.getFullYear().toString() + month + dates));
