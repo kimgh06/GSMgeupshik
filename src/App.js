@@ -6,8 +6,6 @@ function App() {
   const [loading, setLoading] = useState(1);
   const [num, setNum] = useState(0);
   const [add, setAdd] = useState(0);
-  const [savedDates, setSavedDates] = useState(0);
-  const [savedMonth, setSavedMonth] = useState(0);
   const [today, setToday] = useState();
   const whatmonths = (theMonth) => {
     switch (parseInt(theMonth) % 12) {
@@ -40,50 +38,40 @@ function App() {
     }
   }
   const date = new Date();
-  let dates = ('0' + (parseInt(date.getDate()) + add).toString()).slice(-2).toString();
+  let dates = ('0' + (parseInt(date.getDate())).toString()).slice(-2).toString();
   let month = ('0' + (date.getMonth() + 1)).slice(-2).toString();
   const fetching = async (add, num) => {
     try {
       setLoading(1);
-      month = parseInt(month) + savedMonth;
-      dates = dates - savedDates;
+      month = today.toString().slice(-4, -2);
+      dates = (parseInt(today.toString().slice(-2)) + add).toString();
       if (parseInt(dates) < 1) { //감소할 경우
-        setSavedMonth(c => c - 1);
         month--;
         if (whatmonths(month - 1) === 0) {
           dates = "30";
-          setSavedDates(c => c - 30);
         }
         else if (whatmonths(month - 1) === 1) {
           dates = "31";
-          setSavedDates(c => c - 31);
         }
         else if (whatmonths(month - 1) === 2) {
           dates = "28";
-          setSavedDates(c => c - 28);
         }
       }
       else if (parseInt(dates) > 28) { //증가할 경우
         console.log(dates);
         if (whatmonths(month) === 0 && parseInt(dates) > 30) {
           console.log("0");
-          setSavedDates(c => c + 30);
           month++;
-          setSavedMonth(c => c + 1);
           dates = 1;
         }
         else if (whatmonths(month) === 1 && parseInt(dates) > 31) {
           console.log("1");
-          setSavedDates(c => c + 31);
           month++;
-          setSavedMonth(c => c + 1);
           dates = 1;
         }
         else if (whatmonths(month) === 2) {
           console.log("2");
-          setSavedDates(c => c + 28);
           month++;
-          setSavedMonth(c => c + 1);
           dates = 1;
         }
       }
@@ -105,6 +93,7 @@ function App() {
     }
   }
   useEffect(() => {
+    setToday(20230201);
     fetching(add, num);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -113,11 +102,11 @@ function App() {
       <button onClick={() => {
         if (num < 1) {
           setAdd(c => c - 1);
-          fetching(add - 1, 2);
+          fetching(-1, 2);
           setNum(2);
         }
         else {
-          fetching(add, num - 1);
+          fetching(0, num - 1);
           setNum(c => c - 1);
         }
       }}>◀</button>
@@ -137,11 +126,11 @@ function App() {
       <button onClick={() => {
         if (num > 1) {
           setAdd(c => c + 1);
-          fetching(add + 1, 0);
+          fetching(+1, 0);
           setNum(0);
         }
         else {
-          fetching(add, num + 1);
+          fetching(0, num + 1);
           setNum(c => c + 1);
         }
       }}>▶</button>
