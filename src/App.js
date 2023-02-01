@@ -38,13 +38,16 @@ function App() {
     }
   }
   const date = new Date();
-  let dates = ('0' + (parseInt(date.getDate())).toString()).slice(-2).toString();
-  let month = ('0' + (date.getMonth() + 1)).slice(-2).toString();
   const fetching = async (add, num) => {
+    const todays = today;
     try {
       setLoading(1);
-      month = today.toString().slice(-4, -2);
-      dates = (parseInt(today.toString().slice(-2)) + add).toString();
+      let today = todays;
+      if (today === undefined) {
+        today = date.getFullYear() + ('0' + (date.getMonth() + 1)).slice(-2).toString() + ('0' + (parseInt(date.getDate())).toString()).slice(-2).toString();
+      }
+      let month = today.toString().slice(-4, -2);
+      let dates = (parseInt(today.toString().slice(-2)) + add).toString();
       if (parseInt(dates) < 1) { //감소할 경우
         month--;
         if (whatmonths(month - 1) === 0) {
@@ -60,17 +63,14 @@ function App() {
       else if (parseInt(dates) > 28) { //증가할 경우
         console.log(dates);
         if (whatmonths(month) === 0 && parseInt(dates) > 30) {
-          console.log("0");
           month++;
           dates = 1;
         }
         else if (whatmonths(month) === 1 && parseInt(dates) > 31) {
-          console.log("1");
           month++;
           dates = 1;
         }
         else if (whatmonths(month) === 2) {
-          console.log("2");
           month++;
           dates = 1;
         }
@@ -93,7 +93,7 @@ function App() {
     }
   }
   useEffect(() => {
-    setToday(20230201);
+    setToday(date.getFullYear() + ('0' + (date.getMonth() + 1)).slice(-2).toString() + ('0' + (parseInt(date.getDate())).toString()).slice(-2).toString());
     fetching(add, num);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
