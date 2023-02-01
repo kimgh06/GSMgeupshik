@@ -5,7 +5,6 @@ function App() {
   const [list, setList] = useState([]);
   const [loading, setLoading] = useState(1);
   const [num, setNum] = useState(0);
-  const [add, setAdd] = useState(0);
   const [today, setToday] = useState();
   const whatmonths = (theMonth) => {
     switch (parseInt(theMonth) % 12) {
