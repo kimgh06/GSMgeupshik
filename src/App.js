@@ -44,9 +44,9 @@ function App() {
   let month = ('0' + (date.getMonth() + 1)).slice(-2).toString();
   const fetching = async (add, num) => {
     try {
+      setLoading(1);
       month = parseInt(month) + savedMonth;
       dates = dates - savedDates;
-      setLoading(1);
       if (parseInt(dates) < 1) { //감소할 경우
         setSavedMonth(c => c - 1);
         month--;
@@ -88,7 +88,7 @@ function App() {
         }
       }
       dates = ('0' + dates).toString().slice(-2);
-      month = ('0' + (parseInt(month) === 0 ? 12 : parseInt(month))).toString();
+      month = ('0' + (parseInt(month) === 0 ? 12 : parseInt(month))).toString().slice(-2);
       console.log(whatmonths(month), dates);
       setToday(parseInt(date.getFullYear().toString() + month + dates));
       const jsons = await (await fetch(`https://open.neis.go.kr/hub/mealServiceDietInfo?key=bb0f24af7fbc4bc896e2be32361cb2e4&Type=json&ATPT_OFCDC_SC_CODE=F10&SD_SCHUL_CODE=7380292&MLSV_YMD=${date.getFullYear().toString() + month + dates}`)).json();
