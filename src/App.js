@@ -49,7 +49,6 @@ function App() {
       let month = today.toString().slice(-4, -2);
       let dates = (parseInt(today.toString().slice(-2)) + add).toString();
       if (parseInt(dates) < 1) { //감소할 경우
-        month--;
         if (whatmonths(month - 1) === 0) {
           dates = "30";
         }
@@ -59,6 +58,7 @@ function App() {
         else if (whatmonths(month - 1) === 2) {
           dates = "28";
         }
+        month--;
       }
       else if (parseInt(dates) > 28) { //증가할 경우
         console.log(dates);
@@ -76,7 +76,7 @@ function App() {
         }
       }
       dates = ('0' + dates).toString().slice(-2);
-      month = ('0' + (parseInt(month) === 0 ? 12 : parseInt(month))).toString().slice(-2);
+      month = ('0' + (parseInt(month % 12) === 0 ? 12 : parseInt(month % 12))).toString().slice(-2);
       console.log(whatmonths(month), dates);
       setToday(parseInt(date.getFullYear().toString() + month + dates));
       const jsons = await (await fetch(`https://open.neis.go.kr/hub/mealServiceDietInfo?key=bb0f24af7fbc4bc896e2be32361cb2e4&Type=json&ATPT_OFCDC_SC_CODE=F10&SD_SCHUL_CODE=7380292&MLSV_YMD=${date.getFullYear().toString() + month + dates}`)).json();
@@ -94,14 +94,13 @@ function App() {
   }
   useEffect(() => {
     setToday(date.getFullYear() + ('0' + (date.getMonth() + 1)).slice(-2).toString() + ('0' + (parseInt(date.getDate())).toString()).slice(-2).toString());
-    fetching(add, num);
+    fetching(0, num);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return <div className="App">
     <div className="left buttons">
       <button onClick={() => {
         if (num < 1) {
-          setAdd(c => c - 1);
           fetching(-1, 2);
           setNum(2);
         }
@@ -110,6 +109,9 @@ function App() {
           setNum(c => c - 1);
         }
       }}>◀</button>
+      <button onClick={() => { fetching(-1, num); }}>
+        어제로
+      </button>
     </div>
     <div className="MainContents">
       <p>{today}&nbsp;{num + 1}번째</p>
@@ -123,9 +125,11 @@ function App() {
       </>)}
     </div>
     <div className="right buttons">
+      <button onClick={() => { fetching(1, num); }}>
+        내일로
+      </button>
       <button onClick={() => {
         if (num > 1) {
-          setAdd(c => c + 1);
           fetching(+1, 0);
           setNum(0);
         }
