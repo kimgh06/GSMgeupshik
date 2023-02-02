@@ -45,7 +45,7 @@ function App() {
       if (today === undefined) {
         today = date.getFullYear() + ('0' + (date.getMonth() + 1)).slice(-2).toString() + ('0' + (parseInt(date.getDate())).toString()).slice(-2).toString();
       }
-      let year = today.toString().slice(2);
+      let year = parseInt(today.toString().slice(0, 4));
       let month = today.toString().slice(-4, -2);
       let dates = (parseInt(today.toString().slice(-2)) + add).toString();
       if (parseInt(dates) < 1) { //감소할 경우
@@ -58,6 +58,10 @@ function App() {
         else if (whatmonths(month - 1) === 2) {
           dates = "28";
         }
+        if (month % 12 === 1) {
+          year = year - 1;
+          console.log('asdf');
+        }
         month--;
       }
       else if (parseInt(dates) > 28) { //증가할 경우
@@ -67,19 +71,23 @@ function App() {
           dates = 1;
         }
         else if (whatmonths(month) === 1 && parseInt(dates) > 31) {
-          month++;
           dates = 1;
+          if (month % 12 === 0) {
+            year = year + 1;
+          }
+          month++;
         }
         else if (whatmonths(month) === 2) {
           month++;
           dates = 1;
         }
       }
+      year = year.toString();
       dates = ('0' + dates).toString().slice(-2);
       month = ('0' + (parseInt(month % 12) === 0 ? 12 : parseInt(month % 12))).toString().slice(-2);
       console.log(whatmonths(month), dates);
-      setToday(parseInt(date.getFullYear().toString() + month + dates));
-      const jsons = await (await fetch(`https://open.neis.go.kr/hub/mealServiceDietInfo?key=bb0f24af7fbc4bc896e2be32361cb2e4&Type=json&ATPT_OFCDC_SC_CODE=F10&SD_SCHUL_CODE=7380292&MLSV_YMD=${date.getFullYear().toString() + month + dates}`)).json();
+      setToday(parseInt(year + month + dates));
+      const jsons = await (await fetch(`https://open.neis.go.kr/hub/mealServiceDietInfo?key=bb0f24af7fbc4bc896e2be32361cb2e4&Type=json&ATPT_OFCDC_SC_CODE=F10&SD_SCHUL_CODE=7380292&MLSV_YMD=${year + month + dates}`)).json();
       if (JSON.stringify(jsons) !== JSON.stringify({ "RESULT": { "CODE": "INFO-200", "MESSAGE": "해당하는 데이터가 없습니다." } }) && num < jsons.mealServiceDietInfo[1].row.length) {
         setList(jsons.mealServiceDietInfo[1].row);
         setLoading(0);
@@ -87,7 +95,7 @@ function App() {
         setLoading(-1);
         console.log('it has error');
       }
-      console.log(date.getFullYear().toString() + month + dates, jsons);
+      console.log(year + month + dates, jsons);
     } catch (e) {
       console.log(e);
     }
