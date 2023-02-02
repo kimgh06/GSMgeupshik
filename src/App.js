@@ -45,6 +45,7 @@ function App() {
       if (today === undefined) {
         today = date.getFullYear() + ('0' + (date.getMonth() + 1)).slice(-2).toString() + ('0' + (parseInt(date.getDate())).toString()).slice(-2).toString();
       }
+      let year = today.toString().slice(2);
       let month = today.toString().slice(-4, -2);
       let dates = (parseInt(today.toString().slice(-2)) + add).toString();
       if (parseInt(dates) < 1) { //감소할 경우
@@ -108,15 +109,14 @@ function App() {
           setNum(c => c - 1);
         }
       }}>◀</button>
-      <button onClick={() => { fetching(-1, num); }}>
-        어제로
+      <button className="moveDays" onClick={() => { fetching(-1, num); }}>
+        어제
       </button>
     </div>
     <div className="MainContents">
       <p>{today}&nbsp;{num + 1}번째</p>
       {loading === 1 ? <span>loading</span> : (loading === -1 ? <div className="NotFound">급식이 없어요.</div> : <>
         <div className="List">
-          <p>{list[0].MLSV_TO_YMD}</p>
           <b>{list[num].MMEAL_SC_NM}&nbsp;</b>
           <span>총{list[num].CAL_INFO}</span>
           <div dangerouslySetInnerHTML={{ __html: list[num].DDISH_NM }} />
@@ -124,9 +124,6 @@ function App() {
       </>)}
     </div>
     <div className="right buttons">
-      <button onClick={() => { fetching(1, num); }}>
-        내일로
-      </button>
       <button onClick={() => {
         if (num > 1) {
           fetching(+1, 0);
@@ -137,6 +134,9 @@ function App() {
           setNum(c => c + 1);
         }
       }}>▶</button>
+      <button className="moveDays" onClick={() => { fetching(1, num); }}>
+        내일
+      </button>
     </div>
   </div >;
 }
