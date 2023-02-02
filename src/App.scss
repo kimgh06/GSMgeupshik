@@ -9,20 +9,27 @@
 
   .buttons {
     position: relative;
-    width: 20px;
+    width: 30px;
     display: inline-block;
-    top: 80px;
+    top: 60px;
 
     button {
-      height: 50px;
+      border-radius: 10px;
+      height: 70px;
       border: none;
     }
 
     .moveDays {
-      background-color: chocolate;
+      height: 50px;
+      background-color: darkgray;
+      color: white;
 
       &:hover {
-        background-color: lighten(chocolate, 5%);
+        background-color: lighten(darkgray, 5%);
+      }
+
+      &:active {
+        background-color: darken(darkgray, 5%);
       }
     }
   }
