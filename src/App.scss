@@ -4,14 +4,26 @@
   display: flex;
 
   .MainContents {
-    width: 27%;
+    width: 300px;
   }
 
   .buttons {
-    line-height: 300px;
+    position: relative;
+    width: 20px;
+    display: inline-block;
+    top: 80px;
 
     button {
-      height: 200px;
+      height: 50px;
+      border: none;
+    }
+
+    .moveDays {
+      background-color: chocolate;
+
+      &:hover {
+        background-color: lighten(chocolate, 5%);
+      }
     }
   }
 }
