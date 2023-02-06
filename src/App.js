@@ -106,45 +106,47 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return <div className="App">
-    <div className="left buttons">
-      <button onClick={() => {
-        if (num < 1) {
-          fetching(-1, 2);
-          setNum(2);
-        }
-        else {
-          fetching(0, num - 1);
-          setNum(c => c - 1);
-        }
-      }}>◀</button>
-      <button className="moveDays" onClick={() => { fetching(-1, num); }}>
-        어제
-      </button>
-    </div>
-    <div className="MainContents">
-      <p>{today}&nbsp;{num + 1}번째</p>
-      {loading === 1 ? <span>loading</span> : (loading === -1 ? <div className="NotFound">급식이 없어요.</div> : <>
-        <div className="List">
-          <b>{list[num].MMEAL_SC_NM}&nbsp;</b>
-          <span>총{list[num].CAL_INFO}</span>
-          <div dangerouslySetInnerHTML={{ __html: list[num].DDISH_NM }} />
-        </div>
-      </>)}
-    </div>
-    <div className="right buttons">
-      <button onClick={() => {
-        if (num > 1) {
-          fetching(+1, 0);
-          setNum(0);
-        }
-        else {
-          fetching(0, num + 1);
-          setNum(c => c + 1);
-        }
-      }}>▶</button>
-      <button className="moveDays" onClick={() => { fetching(1, num); }}>
-        내일
-      </button>
+    <div className="AppContents">
+      <div className="left buttons">
+        <button onClick={() => {
+          if (num < 1) {
+            fetching(-1, 2);
+            setNum(2);
+          }
+          else {
+            fetching(0, num - 1);
+            setNum(c => c - 1);
+          }
+        }}>◀</button>
+        <button className="moveDays" onClick={() => { fetching(-1, num); }}>
+          어제
+        </button>
+      </div>
+      <div className="MainContents">
+        <p>{today}&nbsp;{num + 1}번째</p>
+        {loading === 1 ? <span>loading</span> : (loading === -1 ? <div className="NotFound">급식이 없어요.</div> : <>
+          <div className="List">
+            <b>{list[num].MMEAL_SC_NM}&nbsp;</b>
+            <span>총{list[num].CAL_INFO}</span>
+            <div dangerouslySetInnerHTML={{ __html: list[num].DDISH_NM }} />
+          </div>
+        </>)}
+      </div>
+      <div className="right buttons">
+        <button onClick={() => {
+          if (num > 1) {
+            fetching(+1, 0);
+            setNum(0);
+          }
+          else {
+            fetching(0, num + 1);
+            setNum(c => c + 1);
+          }
+        }}>▶</button>
+        <button className="moveDays" onClick={() => { fetching(1, num); }}>
+          내일
+        </button>
+      </div>
     </div>
   </div >;
 }
