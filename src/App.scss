@@ -3,33 +3,51 @@
   text-align: center;
   display: flex;
 
-  .MainContents {
-    width: 300px;
-  }
+  .AppContents {
+    border: 2px solid brown;
+    background-color: darken(beige, 7%);
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
 
-  .buttons {
-    position: relative;
-    width: 30px;
-    display: inline-block;
-    top: 60px;
-
-    button {
-      border-radius: 10px;
-      height: 70px;
-      border: none;
+    .MainContents {
+      width: 350px;
+      margin-bottom: 15px;
     }
 
-    .moveDays {
-      height: 50px;
-      background-color: darkgray;
-      color: white;
+    .left {
+      margin-left: -175px;
+    }
 
-      &:hover {
-        background-color: lighten(darkgray, 5%);
+    .right {
+      margin-left: 145px;
+    }
+
+    .buttons {
+      position: absolute;
+      width: 30px;
+      display: inline-block;
+      top: 60px;
+
+      button {
+        border-radius: 10px;
+        height: 70px;
+        border: none;
       }
 
-      &:active {
-        background-color: darken(darkgray, 5%);
+      .moveDays {
+        height: 50px;
+        background-color: darkgray;
+        color: white;
+
+        &:hover {
+          background-color: lighten(darkgray, 5%);
+        }
+
+        &:active {
+          background-color: darken(darkgray, 5%);
+        }
       }
     }
   }
